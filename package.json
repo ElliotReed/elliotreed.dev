@@ -5,7 +5,10 @@
   "description": "elliotreed.dev",
   "author": "elliotreed",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "react",
+    "development",
+    "website"
   ],
   "scripts": {
     "dev": "gatsby develop",
