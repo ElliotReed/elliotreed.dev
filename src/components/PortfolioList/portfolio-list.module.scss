@@ -1,0 +1,11 @@
+@use "../../styles/abstracts" as *;
+
+.portfolio-list {
+  padding: 0;
+
+  @include respond-to("md") {
+    display: grid;
+    gap: $space-md;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

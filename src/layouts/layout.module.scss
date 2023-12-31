@@ -1,0 +1,12 @@
+@use "../styles/index";
+
+.content {
+  display: block; // using style for naming purposes
+  overflow: hidden;
+}
+
+.container {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}

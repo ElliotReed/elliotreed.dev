@@ -1,0 +1,16 @@
+@use "../../styles/abstracts" as *;
+
+.about-me {
+  padding-inline: $space-md;
+
+  .skill-list {
+    list-style: none;
+    padding-left: $space-md;
+
+    & li:before {
+      content: "🎓";
+      font-size: 0.76rem;
+      margin-right: $space-sm;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+@use "../../styles/abstracts" as *;
+
+.external-link {
+  color: get-color("mainBrand", 400);
+  font-weight: $fw-lg;
+
+  @include respond-to("lg") {
+    text-decoration: none;
+  }
+
+  &:focus,
+  &:hover {
+    color: get-color("mainBrand", 600);
+    text-decoration: underline;
+  }
+
+  &:visited {
+    font-weight: $fw-md;
+    color: get-color("mainBrand", 300);
+  }
+}

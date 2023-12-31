@@ -1,0 +1,100 @@
+---
+date: "2023-12-22"
+date_updated: "2023-12-26"
+featured: false
+hero_image: "./gatsby-js.png"
+hero_image_alt: "Gastby js logo, a purple circle containing a G"
+hero_image_credit_link: ""
+hero_image_credit_text: ""
+isActive: true
+slug: "to-gatsby-or-not-to-gatsby"
+title: "To Gatsby or Not to Gatsby"
+---
+
+## What is Gatsby.js?
+
+Gatsby is a Static Site Generator(SSG) written in [React.js](https://react.dev/).
+Gatsby compiles your site, and uses preloading for the pages, so the rendered site is very fast.
+
+## The Data Layer
+
+Gatsby uses a data layer model to query data for pages. It uses [GraphQL](https://graphql.org/)
+
+This is how to make a page query in Gatsby.
+
+``` js
+query ($id: String) {
+  mdx(id: {eq: $id}) {
+    frontmatter {
+      title
+      date(formatString: "MMMM D, YYYY")
+      hero_image_alt
+      hero_image_credit_link
+      hero_image_credit_text
+      hero_image {
+        childImageSharp {
+          gatsbyImageData
+        }
+      }
+    }
+  }
+}
+```
+<br/>
+
+## Images
+
+### gatsby-plugin-image
+
+Using [gatsbpy-plugin-image](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image) you can get preproccessed images for your site. This is one of my main reasons to choose Gastby.
+
+
+#### Image Properties
+
+- layout
+  - "constrained"
+  - "fixed"
+  - "fullWidth"
+
+#### Static Images
+
+```js
+import {StaticImage} from "gatsby-plugin-image"
+```
+<br/>
+
+```js
+<StaticImage />
+```
+
+#### Dynamic Images
+
+```js
+import {GatsbyImage} from "gatsby-plugin-image"
+```
+<br/>
+
+```js
+<GatsbyImage />
+```
+
+toggle the childImageSharp field, and then check the box for the gatsbyImageData field.
+
+```js
+query ($id: String) {
+  mdx(id: {eq: $id}) {
+    frontmatter {
+      title
+      date(formatString: "MMMM D, YYYY")
+      hero_image_alt
+      hero_image_credit_link
+      hero_image_credit_text
+      hero_image {
+        childImageSharp {
+          gatsbyImageData
+        }
+      }
+    }
+  }
+}
+```

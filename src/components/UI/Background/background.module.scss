@@ -1,0 +1,68 @@
+.background-container {
+  z-index: -1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: var(--black);
+  background-image: url(./dev-background_1920.png);
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: blur(0.1rem);
+
+  &::before {
+    z-index: -900;
+    position: fixed;
+    content: "";
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(var(--"darkShades" RGB), 0.1);
+  }
+}
+
+.abbeyroad-background {
+  background-image: url(./abbey-road-800w.jpg);
+}
+
+.dev-background {
+  background-image: url(./dev-background-800w.jpg);
+}
+
+.music-background-epiphone {
+  background-image: url(./epiphone-emperor-800w.jpg);
+}
+
+.music-background-gibson {
+  background-image: url(./gibson-l4-800w.jpg);
+}
+
+.music-background-manouche {
+  background-image: url(./manouche-nuages-800w.jpg);
+}
+
+@media screen and (min-width: 1080px) {
+  .abbeyroad-background {
+    background-image: url(./abbey-road-1920w.jpg);
+  }
+
+  .dev-background {
+    background-image: url(./dev-background-1920w.jpg);
+  }
+
+  .music-background-epiphone {
+    background-image: url(./epiphone-emperor-1920w.jpg);
+  }
+
+  .music-background-gibson {
+    background-image: url(./gibson-l4-1920w.jpg);
+  }
+
+  .music-background-manouche {
+    background-image: url(./manouche-nuages-1920w.jpg);
+  }
+}

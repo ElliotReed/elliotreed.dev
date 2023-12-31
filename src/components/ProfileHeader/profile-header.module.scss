@@ -1,0 +1,68 @@
+@use "../../styles/abstracts" as *;
+
+.profile-header {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.618fr 1fr;
+  aspect-ratio: 16 / 9;
+
+
+  @include respond-to("lg") {
+    aspect-ratio: 16/7;
+  }
+
+  @include respond-to("xl") {
+    aspect-ratio: 16/6;
+  }
+
+  @include respond-to("xxl") {
+    aspect-ratio: 16/5;
+  }
+
+  &__image-wrapper {
+    grid-column: 1 / -1;
+  }
+
+  &__text {
+    --gradient-direction: top left;
+    grid-column: 2 / -1;
+    position: absolute;
+    bottom: 0;
+    color: get-color("lightShades");
+    margin: 0;
+    background: linear-gradient(to var(--gradient-direction), #000 32%, #0000);
+    padding-block-start: 0;
+    padding-block-end: $space-xsm;
+    padding-inline-start: $space-lg;
+    padding-inline-end: $space-xsm;
+
+    @include respond-to("md", $min-or-max: "max") {
+      line-height: initial;
+      padding-inline: $space-xsm;
+      font-size: em-scale(500);
+      grid-column: 1 / 3;
+      width: 100%;
+      text-align: end;
+    }
+
+    @include respond-to("xl") {
+      --gradient-direction: bottom left;
+      bottom: unset;
+      padding-block-start: $space-xsm;
+      padding-block-end: 0;
+      padding-inline-start: $space-xsm;
+      padding-inline-end: $space-lg ;
+
+    }
+  }
+
+  .window-image {
+    position: absolute;
+    inset: 0;
+    grid-column: 1/-1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 0 100rem #000c;
+  }
+}

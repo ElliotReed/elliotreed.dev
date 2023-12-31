@@ -1,0 +1,19 @@
+@use "../../styles/abstracts" as *;
+
+.image-gallery {
+  padding: 0;
+  list-style-type: none;
+  display: grid;
+  gap: $space-md;
+
+  @include respond-to("sm") {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-flow: row;
+
+  }
+}
+
+.image {
+  border-radius: $border-radius;
+  overflow: hidden;
+}

@@ -1,0 +1,9 @@
+@use "../../styles/abstracts" as *;
+
+.headings-container,
+.alignment-container {
+
+  &>* {
+    background-color: get-color("mainBrand", 100);
+  }
+}

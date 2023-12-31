@@ -1,0 +1,7 @@
+@use "../../styles/abstracts" as *;
+
+.date-posted-updated {
+  font-size: $fs-sm-em;
+  background: get-color("lightShades", 300);
+  border-radius: $border-radius;
+}

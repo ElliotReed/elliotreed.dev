@@ -1,0 +1,81 @@
+@use "../../styles/abstracts" as *;
+
+.paddingContainer {
+  padding: 0 $space-md;
+}
+
+.portfolio-page {
+  .portfolioHeader {
+    border-radius: $border-radius;
+    background: get-color("lightShades");
+    padding: $space-md;
+
+    h1 {
+      color: get-color("mainBrand");
+    }
+
+    p {
+      color: get-color("darkShades");
+      margin-bottom: 0;
+    }
+  }
+
+  .list {
+    padding: 0;
+  }
+
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr;
+  color: get-color("darkShades");
+  margin: $space-md;
+  @include shadow(2);
+  border-radius: $border-radius;
+  background: get-color("lightShades");
+  transition: 0.3s;
+}
+
+.card__display {
+  display: inline-flex;
+  gap: 1rem;
+  max-width: 100%;
+  margin: $space-md;
+
+  & img {
+    display: block;
+  }
+}
+
+.card__info {
+  margin: 0 $space-md $space-md;
+
+  & a {
+    color: get-color("mainBrand");
+  }
+
+  & h2 {
+    margin: $space-md 0;
+    margin-bottom: 0;
+  }
+
+  & p {
+    margin: $space-md 0;
+  }
+
+  & .blurb {
+    font-size: 0.76em;
+    font-style: italic;
+    margin: $space-lg 0;
+  }
+
+  & .productionFalse {
+    font-size: small;
+    font-style: oblique;
+    color: get-color("lightShades");
+    border-radius: $border-radius;
+    background: get-color("darkShades");
+    @include padding-box();
+  }
+}

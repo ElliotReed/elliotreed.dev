@@ -1,0 +1,15 @@
+@use "../../styles/abstracts" as *;
+
+.article {
+  padding-block: $space-md;
+  overflow: hidden;
+
+  a {
+    @include anchor;
+  }
+
+  &__hero {
+    aspect-ratio: 16/9;
+    border-radius: $border-radius;
+  }
+}

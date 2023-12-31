@@ -1,0 +1,43 @@
+@use "../../styles/abstracts" as *;
+
+.collapsible-header {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 1;
+}
+
+.collapse {
+  animation: collapse $duration-lg ease forwards;
+}
+
+/* Open nav bar on scroll up */
+.expand {
+  animation: expand $duration-md ease forwards;
+}
+
+
+@keyframes collapse {
+  from {
+    opacity: 1;
+    top: 0;
+  }
+
+  to {
+    opacity: 0;
+    top: -100%;
+  }
+}
+
+
+@keyframes expand {
+  from {
+    opacity: 0;
+    top: -100%;
+  }
+
+  to {
+    opacity: 1;
+    top: 0;
+  }
+}

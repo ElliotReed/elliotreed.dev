@@ -1,0 +1,13 @@
+@use "../../styles/abstracts" as *;
+
+.portfolio-list-item {
+  margin-bottom: $space-md;
+  border-radius: $border-radius;
+  @include shadow(1);
+  overflow: hidden;
+
+  &__content {
+    padding: $space-md;
+  }
+
+}

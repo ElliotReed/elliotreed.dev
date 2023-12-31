@@ -1,0 +1,24 @@
+@use "../styles/abstracts" as *;
+
+
+.developer-content {
+  gap: $space-md;
+  margin-block: $space-md;
+
+  @include respond-to("sm") {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.link-card {
+  color: initial;
+  text-decoration: none;
+  @include shadow(1);
+  border-radius: $border-radius;
+  overflow: hidden;
+}
+
+.link-card__content {
+  padding-inline: $space-md;
+}

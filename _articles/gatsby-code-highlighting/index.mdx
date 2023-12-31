@@ -1,0 +1,126 @@
+---
+featured: true
+date: "2023-12-25"
+date_updated: "2023-12-25"
+hero_image: "./jess-bailey-l3N9Q27zULw-unsplash.jpg"
+hero_image_alt: "Colored pencil lined up on top of white surface"
+hero_image_credit_text: "Jess Bailey"
+hero_image_credit_link: "https://unsplash.com/@jessbaileydesigns"
+isActive: true
+slug: "gatsby-code-highlighting"
+title: "Gatsby Code Highlighting"
+---
+
+How can you add code syntax highlighting to a gatsby blog? This article will tell you how to do it using [gatsby-remark-prismjs](https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/).
+
+Install the plugin:
+
+``` shell
+npm install gatsby-remark-prismjs
+```
+
+<br/>
+
+Add to gatsby-config under remark plugins (I'm using *gatsby-remark-mdx* as my transformer). This shows the default options:
+
+```js
+gatsbyRemarkPlugins: [
+  {
+    resolve: `gatsby-remark-prismjs`,
+    options: {
+      classPrefix: "language-",
+      inlineCodeMarker: null,
+      aliases: {},
+      showLineNumbers: false,
+      languageExtensions: [
+        {
+          language: "superscript",
+          extend: "javascript",
+          definition: {
+            superscript_types: /(SuperType)/,
+          },
+          insertBefore: {
+            function: {
+              superscript_keywords: /(superif|superelse)/,
+            },
+          },
+        },
+      ],
+      prompt: {
+        user: "root",
+        host: "localhost",
+        global: false,
+      },
+      escapeEntities: {},
+    },
+  },
+],
+```
+<br/>
+
+Add the theme to the gatsby-browser file:
+
+``` js
+require("prismjs/themes/prism-tomorrow.css");
+```
+
+Theme options are available on the [prismjs website](https://prismjs.com/).
+
+
+If you need to overwrite the styles with your own, create a stylesheet (in this case "/src/styles/global.scss");
+
+Add this to the gatsby-browser file:
+
+``` js
+require("./src/styles/global.scss");
+```
+
+This is what my sass file looks like to overide some basic styles:
+
+``` sass
+@use "./abstracts" as *;
+
+.gatsby-highlight-code-line {
+  background-color: get-color("black");
+  display: block;
+  margin-right: -1em;
+  margin-left: -1em;
+  padding-right: 1em;
+  padding-left: 0.75em;
+  border-left: 0.25em solid #f99;
+}
+
+/**
+ * Add back the container background-color, border-radius, padding, margin
+ * and overflow that we removed from <pre>.
+ */
+.gatsby-highlight {
+  background-color: get-color("black");
+  border-radius: $border-radius;
+  padding: $space-md;
+  overflow: auto;
+  @include scrollbar;
+}
+
+/**
+ * Remove the default PrismJS theme background-color, border-radius, margin,
+ * padding and overflow.
+ * 1. Make the element just wide enough to fit its content.
+ * 2. Always fill the visible space in .gatsby-highlight.
+ * 3. Adjust the position of the line numbers
+ */
+.gatsby-highlight pre[class*="language-"] {
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  overflow: initial;
+  float: left;
+  /* 1 */
+  min-width: 100%;
+  /* 2 */
+}
+```
+
+<br/>
+
+With that you should now have great looking code syntax in your gatsby project! Now write those posts!

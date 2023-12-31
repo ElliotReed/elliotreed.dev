@@ -1,0 +1,7 @@
+@use "../../styles/abstracts" as *;
+
+.organization {
+  &-link__design {
+    color: inherit;
+  }
+}

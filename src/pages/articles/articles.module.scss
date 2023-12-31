@@ -1,0 +1,39 @@
+@use "../../styles/abstracts" as *;
+
+.articles {
+  &__list {
+    list-style-type: none;
+    padding: 0;
+
+    li {
+      margin-bottom: $space-md;
+    }
+  }
+
+  &-article {
+    border-radius: $border-radius;
+    @include shadow(1);
+    overflow: hidden;
+
+    @include respond-to("md") {
+      display: grid;
+      grid-template-columns: 1fr calc($goldenRatio * 1fr);
+    }
+
+    &__content {
+      padding-block-end: $space-md;
+      padding-inline: $space-md;
+
+    }
+
+    &__image-link {
+      display: flex;
+      // align-items: center;
+    }
+
+    &__image {
+      border-radius: $border-radius;
+    }
+
+  }
+}

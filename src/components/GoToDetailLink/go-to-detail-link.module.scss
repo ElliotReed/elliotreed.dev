@@ -1,0 +1,20 @@
+@use "../../styles/abstracts" as *;
+
+.go-to-detail-link {
+  @include padding-box("sm");
+  color: get-color("lightShades", 300);
+  font-weight: $fw-md;
+  text-decoration: none;
+  background-color: get-color("darkShades", 400);
+  border-radius: $border-radius;
+
+  &:focus,
+  &:hover {
+    color: get-color("lightShades", 600);
+    text-decoration: underline;
+  }
+
+  &:visited {
+    color: get-color("lightShades", 400);
+  }
+}

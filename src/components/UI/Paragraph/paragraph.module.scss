@@ -1,0 +1,9 @@
+@use "../../../styles/abstracts/" as *;
+
+.p {
+  //default styles
+  color: inherit;
+  margin-block: 1em;
+  margin-inline: auto;
+  // line-height: ; set in base
+}

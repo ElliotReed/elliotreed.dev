@@ -1,0 +1,26 @@
+@use "../../styles/abstracts" as *;
+
+.footer {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: space-between;
+  padding: $space-md;
+  color: get-color("lightShades");
+  background: get-color("darkShades");
+
+  .social-icons {
+    display: flex;
+    gap: $space-md;
+
+    .icon {
+      color: get-color("lightShades");
+    }
+  }
+
+  // copyright
+  p {
+    margin: 0;
+    font-size: em-scale(400);
+    font-weight: $fw-xs;
+  }
+}
