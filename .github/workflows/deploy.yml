@@ -17,17 +17,11 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
 
-
       - name: Install dependencies
         run: npm install
 
       - name: Build project
         run: npm run build
-
-      - name: Debug SSH Key
-        run: |
-          ssh-add -l  # List loaded SSH keys
-          ssh -T -p 7822 elliotre@elliotreed.net || echo "SSH connection failed"
 
       - name: Test SSH connectivity
         run: |
@@ -35,7 +29,7 @@ jobs:
 
       - name: Deploy via rsync
         run: |
-          scp -P 7822 -r ./public/* elliotre@elliotreed.net:/home/elliotre/elliotreed.dev/
+          rsync -avz --exclude '.well-known' --exclude 'cgi-bin' -e "ssh -p 7822" ./public/ elliotre@elliotreed.net:/home/elliotre/elliotreed.dev/
 
 
 
