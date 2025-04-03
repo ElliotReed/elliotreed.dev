@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import * as styles from './button.module.scss';
+import * as styles from './buttons.module.scss';
 
 type ButtonProps = {
   readonly disabled: boolean;
