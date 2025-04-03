@@ -24,6 +24,11 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Debug SSH Key
+        run: |
+          ssh-add -l  # List loaded SSH keys
+          ssh -T -p 7822 elliotre@elliotreed.net || echo "SSH connection failed"
+
       - name: Test SSH connectivity
         run: |
           ssh -v -o StrictHostKeyChecking=no -p 7822 elliotre@elliotreed.net "echo 'SSH connection successful'"

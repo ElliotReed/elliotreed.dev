@@ -4,11 +4,11 @@ import classNames from 'classnames';
 import * as styles from './button.module.scss';
 
 type ButtonProps = {
-  disabled: boolean;
-  orientation: "vertical" | "horizontal";
-  type: "button" | "submit" | "reset";
-  onClick?: () => void;
-  children: string;
+  readonly disabled: boolean;
+  readonly orientation: "vertical" | "horizontal";
+  readonly type: "button" | "submit" | "reset";
+  readonly onClick?: () => void;
+  readonly children: string;
 }
 
 export default function Button({
