@@ -10,9 +10,13 @@
 
 ## Deployment
 
+### Manually
+
     npm run clean
     npm run build
     copy public folder contents to elliotreed.dev on hosting
+
+### Github actions
 
 ### .htaccess
 
