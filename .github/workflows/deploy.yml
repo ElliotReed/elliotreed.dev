@@ -25,8 +25,8 @@ jobs:
         run: npm run build
 
       - name: Test SSH connectivity
-          run: |
-            ssh -v -o StrictHostKeyChecking=no -p 7822 elliotre@elliotreed.net "echo 'SSH connection successful'"
+        run: |
+          ssh -v -o StrictHostKeyChecking=no -p 7822 elliotre@elliotreed.net "echo 'SSH connection successful'"
 
       - name: Deploy via rsync
         run: |
