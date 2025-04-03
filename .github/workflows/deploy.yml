@@ -1,0 +1,30 @@
+name: Deploy to Hosting
+
+on:
+  push:
+    branches:
+      - main  # You can adjust this to your default branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup SSH key for deployment
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy via rsync
+        run: |
+          rsync -avz --exclude '.well-known' --exclude 'cgi-bin' -e "ssh -p 7822" ./public/ elliotre@elliotreed.net:/home/elliotre/elliotreed.dev/
+

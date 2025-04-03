@@ -1,5 +1,5 @@
 import * as React from "react";
-import { HeadFC, PageProps, graphql } from "gatsby";
+import { HeadProps, PageProps, graphql } from "gatsby";
 
 import { GatsbyImage, IGatsbyImageData, getImage } from "gatsby-plugin-image";
 
@@ -14,7 +14,6 @@ interface PortfolioData {
   mdx: {
     frontmatter: {
       blurb: string
-      title: string
       hero_image_alt: string
       hero_image_credit_link: string
       hero_image_credit_text: string
@@ -23,6 +22,7 @@ interface PortfolioData {
           gatsbyImageData: IGatsbyImageData
         }
       }
+      title: string
     }
   }
 }
@@ -77,6 +77,6 @@ export const query = graphql`
 `;
 
 
-export const Head: HeadFC<string> = () => (
-  <Seo title="Portfolio | Elliot Reed | Developer" />
+export const Head = ({ data: { mdx: { frontmatter } } }: HeadProps<PortfolioData>) => (
+  <Seo title={`Portfolio | ${frontmatter.title} | Elliot Reed | Developer`} />
 )

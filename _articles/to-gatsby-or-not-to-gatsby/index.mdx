@@ -1,6 +1,6 @@
 ---
 date: "2023-12-22"
-date_updated: "2023-12-26"
+date_updated: "2024-01-02"
 featured: false
 hero_image: "./gatsby-js.png"
 hero_image_alt: "Gastby js logo, a purple circle containing a G"
@@ -16,6 +16,11 @@ title: "To Gatsby or Not to Gatsby"
 Gatsby is a Static Site Generator(SSG) written in [React.js](https://react.dev/).
 Gatsby compiles your site, and uses preloading for the pages, so the rendered site is very fast.
 
+## tl;dr
+The good? Great performance, SEO, and image optimization. Built in graphql interface is very powerfull. A lot of plugins are available for just about everything.
+The bad? Complex code and slow developer start (go get some coffee, it's going to take a couple of minutes).
+The ugly? graphql queries for all the good stuff, not beginner friendly.
+
 ## The Data Layer
 
 Gatsby uses a data layer model to query data for pages. It uses [GraphQL](https://graphql.org/)
@@ -26,7 +31,6 @@ This is how to make a page query in Gatsby.
 query ($id: String) {
   mdx(id: {eq: $id}) {
     frontmatter {
-      title
       date(formatString: "MMMM D, YYYY")
       hero_image_alt
       hero_image_credit_link
@@ -36,6 +40,7 @@ query ($id: String) {
           gatsbyImageData
         }
       }
+      title
     }
   }
 }
@@ -61,24 +66,33 @@ Using [gatsbpy-plugin-image](https://www.gatsbyjs.com/docs/reference/built-in-co
 ```js
 import {StaticImage} from "gatsby-plugin-image"
 ```
+
 <br/>
 
 ```js
-<StaticImage />
+<StaticImage
+  src="./my-image.jpg"
+  alt="A lovely bunch of coconuts"
+/>
 ```
+
+<br/>
 
 #### Dynamic Images
 
 ```js
-import {GatsbyImage} from "gatsby-plugin-image"
+import {GatsbyImage, getImage} from "gatsby-plugin-image"
 ```
-<br/>
+
+getImage() is a helper function that takes *gatsbyImageData*;
 
 ```js
-<GatsbyImage />
+<GatsbyImage image={image}/>
 ```
 
-toggle the childImageSharp field, and then check the box for the gatsbyImageData field.
+You will have to write a graphql query for the images, but all optimization will be handled automatically.
+
+Toggle the childImageSharp field, and then check the box for the gatsbyImageData field.
 
 ```js
 query ($id: String) {
@@ -98,3 +112,17 @@ query ($id: String) {
   }
 }
 ```
+
+<br/>
+
+## Blog
+
+Setting up blog pages is a breeze using Gatsby. Set up a dynamic page template, and your markdown files will be converted to pages. Using [gatsby-plugin-mdx](https://www.gatsbyjs.com/plugins/gatsby-plugin-mdx/), you can even add jsx to your markdown!
+
+## Deployment
+
+Gatsby is now a part of [Netlify](https://www.netlify.com/), so if you're deploying there you can connect to your gitHub account and run builds automatically.
+
+## Conclusion
+
+While the downsides (especially for beginners) are a bit much:), I think the benefits far out weigh them. I would recomend using Gatsby for your next website.

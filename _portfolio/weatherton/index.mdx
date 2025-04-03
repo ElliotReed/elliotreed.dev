@@ -12,4 +12,18 @@ isActive: true
 blurb: "A weather app"
 ---
 
-[Weatherton](https://elliotreed.github.io/weatherton/) was made with HTML, CSS and JavaScript. Data retrieved from the OpenWeather API. Uses canvas elements for barometer and wind.
+[Weatherton](https://elliotreed.github.io/weatherton/) is a web app I designed for learning, with a plan for a specific use down the road.
+
+## Frontend
+
+ The frontend was originally made with HTML, CSS and JavaScript, using canvas elements for the barometer and wind compass. I wrote a createElement wrapper function for easier creation of the elements, of which there are currently way too many!
+
+ I have decided that a bundler would be more efficient, so I am now using vite. I have also enabled typescript and am refactoring for that. Even though this is a small project, it's already too much to keep track of the functions and argument, so I think typescript is worth the extra effort.
+
+ This was also a chance to learn about drawing visual elements with the canvas api. While I did that successfully, I learned that for my use case the images were blurry at the set dimension. I used the ResizeObserver api to draw the canvas elements responsively. I then realized that the canvas was in fact the wrong way to go. Do to the almost icon lke size, an svg was a better solution. So the code is re-written to create responsive svg's instead. I wrote some svg creation wrapper functions here as well. Now the images are crisp at any size.
+
+ My favorite feature is one you probably won't see if you visit the app. The background (and the card background) changes by the time of day (night vs. day) and gradually changes leading in to sunset or sundown, specific to your location. It can be seen in the "Hourly Forecast" section.
+
+## Backend
+
+ This app uses data from the OpenWeather API. Originally there was no backend, but I needed to hide my api key, so I built an express server that requests the data and sends it back to the frontend. The API does have a call limit you can set, but I was curious about setting the limit for myself, so I wrote code to keep track of the calls on a per day basis, and set my own limit on the number. Do to the small usage and amount of data, it's being kept in a .json file.

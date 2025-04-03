@@ -1,0 +1,15 @@
+@use "../styles/abstracts" as *;
+
+.not-found {
+  a {
+    @include anchor;
+  }
+
+  .code {
+    color: get-color("mainBrand", 300);
+    @include padding-box("xs");
+    background-color: get-color("lightShades", 300);
+    font-size: $fs-md-em;
+    border-radius: $border-radius;
+  }
+}

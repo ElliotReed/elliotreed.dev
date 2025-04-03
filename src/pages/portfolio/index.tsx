@@ -10,7 +10,7 @@ import MaxWidthContainer from "../../components/MaxWidthContainer";
 import Paragraph from "../../components/UI/Paragraph/Paragraph";
 import PortfolioList from "../../components/PortfolioList";
 import PortfolioListItem from "../../components/PortfolioListItem";
-import { Seo } from "../../components/SEO/Seo";
+import Seo from "../../components/SEO";
 
 import * as styles from "./portfolio.module.scss";
 
@@ -93,5 +93,5 @@ query {
 
 
 export const Head: HeadFC<string> = () => (
-  <Seo title="Hire Elliot Reed | Developer" />
+  <Seo title="Portfolio | Elliot Reed | Developer" />
 )

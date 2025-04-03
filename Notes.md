@@ -12,7 +12,13 @@
 
     npm run clean
     npm run build
-    copy public folder contents to public_html on hosting
+    copy public folder contents to elliotreed.dev on hosting
+
+### .htaccess
+
+.htaccess tells Apache about your site
+for custon error pages add:
+ErrorDocument 404 /404/index.html (path to page)
 
 ## Structure
 

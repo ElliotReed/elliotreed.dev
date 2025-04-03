@@ -6,7 +6,7 @@ import MaxWidthContainer from "../components/MaxWidthContainer";
 import Heading from "../components/Heading/Heading";
 import Paragraph from "../components/UI/Paragraph/Paragraph";
 import ProfileHeader from "../components/ProfileHeader";
-import { Seo } from "../components/SEO";
+import Seo from "../components/SEO";
 
 import * as styles from "./developer.module.scss";
 

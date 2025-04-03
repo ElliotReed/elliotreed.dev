@@ -1,5 +1,5 @@
-import React from "react"
-import { useSiteMetadata } from "../../hooks/use-site-metadata"
+import * as React from "react";
+import { useSiteMetadata } from "../../hooks/use-site-metadata";
 
 interface SEOProps {
   author?: string
@@ -9,7 +9,7 @@ interface SEOProps {
   title?: string
 }
 
-export const Seo: React.FC<React.PropsWithChildren<SEOProps>> = ({
+const Seo: React.FC<React.PropsWithChildren<SEOProps>> = ({
   author,
   description,
   pathname,
@@ -23,7 +23,7 @@ export const Seo: React.FC<React.PropsWithChildren<SEOProps>> = ({
     description: defaultDescription,
     author: defaultAuthor,
     siteUrl: defaultSiteUrl,
-  } = useSiteMetadata()
+  } = useSiteMetadata();
 
   const seo = {
     author: author ?? defaultAuthor,

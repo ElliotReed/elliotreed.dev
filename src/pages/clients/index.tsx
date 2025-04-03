@@ -8,7 +8,7 @@ import Heading from "../../components/Heading/Heading";
 import MaxWidthContainer from "../../components/MaxWidthContainer";
 import PortfolioList from "../../components/PortfolioList";
 import PortfolioListItem from "../../components/PortfolioListItem";
-import { Seo } from "../../components/SEO/Seo";
+import Seo from "../../components/SEO";
 
 import * as styles from "./clients.module.scss";
 

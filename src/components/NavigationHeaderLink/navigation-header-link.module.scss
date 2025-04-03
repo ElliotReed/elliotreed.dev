@@ -1,7 +1,7 @@
 @use "../../styles/abstracts" as *;
 
 .navigation-header-link {
-  padding-inline: $space-xsm;
+  padding-inline: $space-xs;
   color: get-color("mainBrand");
   font-weight: $fw-md;
   text-decoration: none;

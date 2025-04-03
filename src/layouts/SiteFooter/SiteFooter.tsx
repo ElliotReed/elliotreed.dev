@@ -13,16 +13,16 @@ const Footer = ({ type }: { type: string }) => {
       <div className={styles.socialIcons}>
         {type === "developer" &&
           <>
-            <ExternalLink to="https://www.linkedin.com/in/elliot-reed/">
+            <ExternalLink to="https://www.linkedin.com/in/elliot-reed/" title="LinkedIn">
               <FontAwesomeIcon icon={faLinkedinIn} className={styles.icon} />
             </ExternalLink>
-            <ExternalLink to="https://github.com/ElliotReed">
+            <ExternalLink to="https://github.com/ElliotReed" title="GitHub">
               <FontAwesomeIcon icon={faGithubSquare} className={styles.icon} />
             </ExternalLink>
           </>
         }
       </div>
-      <Copyright originYear="2018" holder={<a href="/">Elliot Reed</a>} />
+      <Copyright originYear="2023" holder={<a href="/">Elliot Reed</a>} />
     </footer>
   )
 }

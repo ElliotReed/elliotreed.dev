@@ -1,7 +1,9 @@
 import React from "react";
+import { HeadFC } from "gatsby";
 
-import Heading from "../../components/Heading";
+import Heading from "../../components/Heading/Heading";
 import MaxWidthContainer from "../../components/MaxWidthContainer";
+import Seo from "../../components/SEO/Seo";
 
 import * as styles from "./about.module.scss";
 
@@ -32,3 +34,7 @@ export default function AboutDeveloper() {
     </main>
   );
 }
+
+export const Head: HeadFC = () => (
+  <Seo title="About | Elliot Reed | Developer" />
+)
