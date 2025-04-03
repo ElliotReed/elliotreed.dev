@@ -26,5 +26,7 @@ jobs:
 
       - name: Deploy via rsync
         run: |
-          rsync -avz --exclude '.well-known' --exclude 'cgi-bin' -e "ssh -p 7822" ./public/ elliotre@elliotreed.net:/home/elliotre/elliotreed.dev/
+        scp -P 7822 -r ./public/* elliotre@elliotreed.net:/home/elliotre/elliotreed.dev/
+
+          # rsync -avz --exclude '.well-known' --exclude 'cgi-bin' -e "ssh -p 7822" ./public/ elliotre@elliotreed.net:/home/elliotre/elliotreed.dev/
 
