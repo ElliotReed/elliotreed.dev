@@ -18,6 +18,8 @@
 
 ### Github actions
 
+    rsync -avz --exclude '.well-known' --exclude 'cgi-bin' -e "ssh -p 7822" ./public/ elliotre@elliotreed.net:/home/elliotre/elliotreed.dev/
+
 ### .htaccess
 
 .htaccess tells Apache about your site
