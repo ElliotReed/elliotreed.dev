@@ -29,10 +29,10 @@ jobs:
 
       - name: Ensure target directory exists
         run: ssh -p 7822 elliotre@elliotreed.net "mkdir -p /home/elliotre/elliotreed.dev/"
-        
+
       - name: Deploy via rsync
         run: |
-          rsync -avz --exclude '.well-known' --exclude 'cgi-bin' -e "ssh -p 7822" ./public/ elliotre@elliotreed.net:/home/elliotre/elliotreed.dev/
+          rsync -avz --delete --exclude '.well-known' --exclude 'cgi-bin' -e "ssh -p 7822" ./public/ elliotre@elliotreed.net:/home/elliotre/elliotreed.dev/
 
 
 
