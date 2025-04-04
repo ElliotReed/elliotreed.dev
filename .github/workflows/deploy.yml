@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup SSH key for deployment
         uses: webfactory/ssh-agent@v0.5.3
@@ -27,6 +27,9 @@ jobs:
         run: |
           ssh -v -o StrictHostKeyChecking=no -p 7822 elliotre@elliotreed.net "echo 'SSH connection successful'"
 
+      - name: Ensure target directory exists
+        run: ssh -p 7822 elliotre@elliotreed.net "mkdir -p /home/elliotre/elliotreed.dev/"
+        
       - name: Deploy via rsync
         run: |
           rsync -avz --exclude '.well-known' --exclude 'cgi-bin' -e "ssh -p 7822" ./public/ elliotre@elliotreed.net:/home/elliotre/elliotreed.dev/
