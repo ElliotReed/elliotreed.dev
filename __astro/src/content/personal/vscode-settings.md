@@ -5,6 +5,8 @@ pubDate: 'Jul 22 2025'
 heroImage: '/blog-placeholder-2.jpg'
 ---
 
+setting.json
+
 ```json
 {
   "bookmarks.useWorkaroundForFormatters": true,
