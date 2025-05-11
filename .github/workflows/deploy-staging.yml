@@ -1,9 +1,9 @@
 name: Deploy to Hosting
-
+# remove cd  __astro  after migrating to astro
 on:
   push:
     branches:
-      - main  # You can adjust this to your default branch
+      - dev # used for staging
 
 jobs:
   deploy:
@@ -18,18 +18,24 @@ jobs:
           ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
 
       - name: Install dependencies
-        run: npm install
+
+        run: |
+          cd  __astro 
+          npm install
 
       - name: Build project
-        run: npm run build
+        run: | 
+          cd  __astro
+          npm run build
 
       - name: Test SSH connectivity
         run: |
           ssh -v -o StrictHostKeyChecking=no -p 7822 elliotre@elliotreed.net "echo 'SSH connection successful'"
 
       - name: Ensure target directory exists
-        run: ssh -p 7822 elliotre@elliotreed.net "mkdir -p /home/elliotre/elliotreed.dev/"
+        run: ssh -p 7822 elliotre@elliotreed.net "mkdir -p /home/elliotre/staging.elliotreed.dev/"
 
       - name: Deploy via rsync
         run: |
-          rsync -avz --delete --exclude '.well-known' --exclude 'cgi-bin' -e "ssh -p 7822" ./public/ elliotre@elliotreed.net:/home/elliotre/elliotreed.dev/
+          cd  __astro
+          rsync -avz --delete --exclude '.well-known' --exclude 'cgi-bin' -e "ssh -p 7822" ./dist/ elliotre@elliotreed.net:/home/elliotre/staging.elliotreed.dev/
