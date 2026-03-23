@@ -1,0 +1,10 @@
+// weights loaded here MUST match $font-weight-overrides in _config.scss
+// loaded: 300, 400, 500, 700
+
+@layer base {
+    @font-face {
+        font-family: 'Montserrat';
+        src: url("/fonts/Montserrat-VariableFont_wght.ttf") format('truetype');
+        font-style: normal;
+    }
+}
