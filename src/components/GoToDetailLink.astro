@@ -1,0 +1,21 @@
+---
+import { Icon } from "astro-icon/components";
+
+const { addedStyles, to, ...rest } = Astro.props;
+---
+
+<a href={to} class:list={["go-to-detail-link", addedStyles]} {...rest}>
+  <span><slot /></span>
+  <span class="icon"><Icon name="tabler:chevron-right" /></span>
+</a>
+
+<style lang="scss">
+  @use "mixins";
+
+  @layer components {
+    .go-to-detail-link {
+      @include mixins.button-primary;
+      gap: var(--space-1);
+    }
+  }
+</style>

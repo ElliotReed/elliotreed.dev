@@ -1,0 +1,26 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import ContactForm from "~/components/ContactForm";
+---
+
+<BaseLayout title=" Contact | Elliot Reed" description="Contact Me">
+  <main class="contact-page">
+    <div>
+      <!-- wrapper for content-grid child, may be obsolete when full astro
+      migration is done. -->
+      <h1 id="form-title">Contact</h1>
+
+      <hr />
+
+      <ContactForm client:only="react" type="developer" />
+    </div>
+  </main>
+</BaseLayout>
+
+<style lang="scss">
+  @use "mixins" as *;
+
+  .contact-page {
+    @include content-grid;
+  }
+</style>

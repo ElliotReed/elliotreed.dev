@@ -1,0 +1,100 @@
+---
+const { addedStyles, ...rest } = Astro.props;
+---
+
+<header
+  id="collapsible-header"
+  class:list={["collapsible-header", addedStyles]}
+  data-collapse="false"
+  {...rest}
+>
+  <slot />
+</header>
+
+<style lang="scss">
+  @use "abstracts" as *;
+
+  .collapsible-header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+  }
+
+  [data-collapse] {
+    animation: collapse $duration-lg ease forwards;
+  }
+
+  /* Open nav bar on scroll up */
+  [data-collapse="false"] {
+    animation: expand $duration-md ease forwards;
+  }
+
+  @keyframes collapse {
+    from {
+      opacity: 1;
+      top: 0;
+    }
+
+    to {
+      opacity: 0;
+      top: -100%;
+    }
+  }
+
+  @keyframes expand {
+    from {
+      opacity: 0;
+      top: -100%;
+    }
+
+    to {
+      opacity: 1;
+      top: 0;
+    }
+  }
+</style>
+
+<script>
+  function init() {
+    // Initialize state
+    let scrollState = 0;
+
+    const header = document.getElementById("collapsible-header");
+
+    function homeAction() {
+      // Reset when at top of page
+      header?.setAttribute("data-collapse", "false");
+    }
+
+    function downAction() {
+      header?.setAttribute("data-collapse", "true");
+    }
+
+    function upAction() {
+      header?.setAttribute("data-collapse", "false");
+    }
+
+    function getScrollTop() {
+      return window.scrollY;
+    }
+
+    function scrollDetect() {
+      const currentScrollPosition = getScrollTop();
+      if (currentScrollPosition === 0) {
+        homeAction();
+      } else if (currentScrollPosition > scrollState) {
+        downAction();
+      } else {
+        upAction();
+      }
+      scrollState = currentScrollPosition;
+    }
+    // Add scroll event listener
+    window.addEventListener("scroll", scrollDetect);
+  }
+
+  init();
+  // Run after Astro view transitions
+  document.addEventListener("astro:after-swap", init);
+</script>

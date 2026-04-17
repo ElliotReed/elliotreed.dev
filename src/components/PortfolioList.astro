@@ -1,0 +1,19 @@
+---
+
+---
+
+<ul class="portfolio-list">
+  <slot />
+</ul>
+
+<style lang="scss">
+  @use "abstracts" as *;
+  @use "mixins";
+
+  .portfolio-list {
+    padding: 0;
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  }
+</style>

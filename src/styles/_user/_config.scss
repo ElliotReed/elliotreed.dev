@@ -1,0 +1,86 @@
+@use "../config/functions" as *;
+
+// ── colors ────────────────────────────────────────────────
+// set primary — system derives accent, neutral, and feedback
+// "accent" key overrides generated accent
+// any extra key gets a full 50-950 scale
+
+$color-overrides: (
+  "primary": #2e3832,
+  "darks": #382e31,
+  "lights": #e4ddcd,
+  // "accent":   #FF4B8B,
+   // "tertiary": #FF0000,
+) !default;
+
+// drives accent generation — ignored if "accent" set in $colors
+// "complementary" | "analogous" | "split-complementary" | "monochromatic"
+$color-scheme-override: "complementary" !default;
+
+// ── typography ────────────────────────────────────────────
+// override any role — unset roles use defaults
+// adding a new key generates a new --font-* token
+$font-overrides: (
+  "body": (
+    "Montserrat",
+    "Times New Roman",
+    serif,
+  ),
+  "heading": (
+    "Montserrat",
+    system-ui,
+    sans-serif,
+  ),
+  "display": (
+    "Montserrat",
+    system-ui,
+    sans-serif,
+  ),
+  "ui": (
+    "Montserrat",
+    system-ui,
+    sans-serif,
+  ),
+  "mono": (
+    "Courier New",
+    Courier,
+    monospace,
+  ),
+) !default;
+
+// replaces defaults entirely — only list weights your font actually loads
+$font-weight-overrides: (
+  "light": 300,
+  "regular": 400,
+  "medium": 500,
+  "semi-bold": 600,
+  "bold": 700,
+) !default;
+
+// null uses default — ratios: 1.125 subtle / 1.25 default / 1.333 expressive
+$type-base-override: null !default;
+$type-ratio-override: null !default;
+// content area for grid content
+$content-width-override: null !default;
+
+// ── spacing ───────────────────────────────────────────────
+$space-unit-override: null !default;
+
+// ── radius ────────────────────────────────────────────────
+$radius-base-override: null !default;
+
+// ── box padding ───────────────────────────────────────────
+$box-ratio-override: null !default;
+
+// ── shadows ───────────────────────────────────────────────
+
+$shadow-offset-base-override: 3px !default; // 2px
+// direction: where the light source is
+// "none" overhead | "left" from left | "right" from right
+$shadow-direction-override: "left" !default;
+$shadow-hardness-override: null !default; // 1 - 5
+
+// ── breakpoints ───────────────────────────────────────────
+// merges with defaults — only set what changes or add new
+// use px-to-em() to convert from px
+$breakpoint-overrides: () !default;

@@ -1,0 +1,13 @@
+@use "abstracts" as *;
+@use "mixins";
+
+.sending {
+  display: block;
+  position: relative;
+  inset: 0;
+  margin-block: var(--space-sm);
+
+  svg {
+    @include mixins.shadow(2);
+  }
+}

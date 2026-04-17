@@ -1,0 +1,26 @@
+---
+import FormattedDate from "./FormattedDate.astro";
+
+const { date_posted, date_updated } = Astro.props;
+---
+
+<span class="date-posted-updated">
+  Posted: <FormattedDate date={date_posted} />
+  {
+    date_updated && (
+      <span>
+        ,{" "}
+        <em>
+          Updated: <FormattedDate date={date_updated} />
+        </em>
+      </span>
+    )
+  }
+</span>
+
+<style lang="scss">
+  .date-posted-updated {
+    color: var(--color-text);
+    font-size: var(--text-xs);
+  }
+</style>

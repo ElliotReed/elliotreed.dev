@@ -1,0 +1,114 @@
+---
+import CollapsibleHeader from "~/components/CollapsibleHeader.astro";
+import Logo from "~/components/Logo";
+import ThemeSelector from "~/components/ThemeSelector.astro";
+
+const type = "developer";
+const mode = "developer";
+const currentPath = Astro.url.pathname;
+const isDeveloperAnimationPath =
+  currentPath === "/design/" || currentPath === "/";
+const isMusicianAnimationPath =
+  currentPath === "/portfolio/gypsy-swing-revue-site/";
+
+function getLogoAnimation(type: string, mode: string) {
+  let animation;
+  if (isDeveloperAnimationPath) {
+    animation = "SWITCH_TO_DEVELOPER";
+  }
+  if (isMusicianAnimationPath) {
+    animation = "SWITCH_TO_MUSICIAN";
+  }
+
+  return animation;
+}
+---
+
+<CollapsibleHeader addedStyles="header">
+  <div class="nav-brand">
+    <a href="/">
+      <div class="logo-wrapper">
+        <Logo
+          client:only="react"
+          width="2rem"
+          mode="developer"
+          animation={getLogoAnimation(type, mode)}
+        />
+        <span class="title">Elliot Reed</span>
+      </div>
+    </a>
+  </div>
+  <slot />
+  <ThemeSelector animate />
+</CollapsibleHeader>
+
+<style lang="scss">
+  @use "mixins" as *;
+
+  // set to fade shadow on scroll
+  :global(html) {
+    container-type: scroll-state;
+    container-name: scroller;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-inline: var(--space-md);
+    color: var(--color-header-text);
+    background-color: var(--color-background);
+
+    & > * {
+      margin-block: var(--space-md);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      @include shadow(1);
+      opacity: 0;
+      transition: opacity var(--duration-normal) ease-in-out;
+      z-index: -1;
+
+      @container scroller
+      scroll-state(scrollable: top) {
+        opacity: 1;
+      }
+    }
+  }
+
+  .nav-brand {
+    color: inherit;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: var(--space-sm);
+    font-family: var(--font-ui);
+
+    & a {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+
+  .logo-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .title {
+    margin: 0;
+    color: inherit;
+    font-size: var(--text-sm);
+    font-weight: bold;
+    text-transform: uppercase;
+
+    @include respond-to("xs") {
+      font-size: var(--text-sm);
+    }
+  }
+</style>

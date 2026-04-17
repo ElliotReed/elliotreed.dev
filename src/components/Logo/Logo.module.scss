@@ -1,0 +1,47 @@
+@use "abstracts";
+@use "mixins";
+
+:global(:root[data-theme="dark"]) {
+  --logo-active-fill: var(--color-lights-500);
+  --logo-inactive-fill: var(--color-lights-500);
+}
+
+:global(:root[data-theme="light"]) {
+  --logo-aactive-fill: var(--color-primary-500);
+  --logo-ainactive-fill: var(--color-primary-500);
+}
+
+.logo {
+  display: block;
+  border: 0;
+  fill: var(--logo-active-fill);
+  filter: url(#shadow);
+  outline: none;
+  transform-origin: center center;
+
+  .musician,
+  .developer {
+    transform-origin: bottom center;
+    perspective: 200px;
+    transform-style: preserve-3d;
+    fill: var(--logo-active-fill);
+    opacity: 1;
+  }
+
+  .active {
+    fill: var(--logo-active-fill);
+    opacity: 1;
+  }
+
+  .inactive {
+    fill: var(--logo-inactive-fill);
+    opacity: 0.25;
+    // transition: opacity var(--duration-slow);
+  }
+
+  //   .light {
+  //     fill: abstracts.get-color("lightShades");
+  //     fill: abstracts.get-color("mainBrand");
+  //     opacity: 1;
+  //   }
+}

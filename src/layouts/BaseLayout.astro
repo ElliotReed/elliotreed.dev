@@ -1,0 +1,46 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Navbar from "./Navbar.astro";
+import SiteFooter from "./SiteFooter.astro";
+import SiteHeader from "./SiteHeader.astro";
+
+const { title, description } = Astro.props;
+const type = "developer";
+const mode = "developer";
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+
+    <!-- for mobile safari trouble shooting {
+            isDev && (
+                <>
+                    <script
+                        is:inline
+                        src="https://cdn.jsdelivr.net/npm/eruda"
+                    />
+                    <script is:inline>eruda.init();</script>
+                </>
+            )
+        } -->
+  </head>
+  <body>
+    <!-- <SiteHeader mode={mode} /> -->
+    <SiteHeader type={type}>
+      <Navbar />
+    </SiteHeader>
+    <!-- <div class={styles.content}> -->
+    <!-- <div class="content"> -->
+    <slot />
+    <!-- </div> -->
+    <SiteFooter type={type} />
+  </body>
+</html>
+
+<style lang="scss">
+  @use "mixins" as *;
+  body {
+    @include scrollbar;
+  }
+</style>

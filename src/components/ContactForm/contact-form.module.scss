@@ -1,0 +1,42 @@
+@use "abstracts";
+@use "mixins" as *;
+
+@layer components {
+  .contact-form {
+    @include flow;
+    @include box-modal;
+    padding-inline: var(--space-md);
+    background-color: var(--color-surface);
+
+    & > :last-child {
+      margin-bottom: var(--space-md);
+    }
+
+    .error {
+      color: var(--color-error);
+      font-weight: var(--font-weight-bold);
+    }
+
+    & label {
+      display: block;
+
+      &::after {
+        content: ":";
+      }
+    }
+
+    .full {
+      width: 100%;
+    }
+
+    & input,
+    textarea {
+      @include shadow-inset(1);
+
+      & textarea {
+        height: 10rem;
+        resize: vertical;
+      }
+    }
+  }
+}

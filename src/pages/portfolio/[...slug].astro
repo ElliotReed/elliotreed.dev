@@ -1,0 +1,77 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+
+import Heading from "../../components/Heading/Heading";
+import MaxWidthContainer from "../../components/MaxWidthContainer";
+import PhotoCredit from "../../components/PhotoCredit";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+    const portfolioPieces = await getCollection("portfolio");
+
+    return portfolioPieces.map((portfolioPiece) => ({
+        params: { slug: portfolioPiece.data.slug },
+        props: portfolioPiece,
+    }));
+}
+
+type Props = CollectionEntry<"portfolio">;
+
+const portfolioPiece = Astro.props;
+const { Content } = await render(portfolioPiece);
+---
+
+<BaseLayout
+    title={`Portfolio | ${portfolioPiece.data.title} | Elliot Reed | Developer`}
+    description="TBD"
+>
+    <main class="portfolio-detail">
+        <header>
+            {
+                portfolioPiece.data.hero_image && (
+                    <Image
+                        src={portfolioPiece.data.hero_image}
+                        alt={portfolioPiece.data.hero_image_alt}
+                    />
+                )
+            }
+            <PhotoCredit
+                link={portfolioPiece.data.hero_image_credit_link}
+                text={portfolioPiece.data.hero_image_credit_text}
+            />
+        </header>
+
+        <article>
+            <Heading level={1}>
+                {portfolioPiece.data.title}
+            </Heading>
+
+            <Heading level={2} size={4}>
+                {portfolioPiece.data.blurb}
+            </Heading>
+
+            <Content />
+        </article>
+    </main>
+</BaseLayout>
+
+<style lang="scss">
+    @use "abstracts";
+    @use "mixins" as *;
+
+    .portfolio-detail {
+        @include content-grid;
+        margin-top: abstracts.$space-md;
+
+        a {
+            @include abstracts.anchor;
+        }
+
+        img {
+            width: 100%;
+            aspect-ratio: 16 /9;
+        }
+    }
+</style>

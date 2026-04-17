@@ -1,0 +1,77 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+
+import DatePostedUpdated from "../../components/DatePostedUpdated";
+import Heading from "../../components/Heading/Heading";
+import PhotoCredit from "../../components/PhotoCredit";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+    const articles = await getCollection("articles");
+
+    return articles.map((article) => ({
+        params: { slug: article.data.slug },
+        props: article,
+    }));
+}
+
+type Props = CollectionEntry<"articles">;
+
+const article = Astro.props;
+const { Content } = await render(article);
+---
+
+<BaseLayout>
+    <main>
+        <article class="article">
+            {
+                article.data.hero_image && (
+                    <Image
+                        alt={article.data.hero_image_alt}
+                        class="article__hero"
+                        src={article.data.hero_image}
+                    />
+                )
+            }
+            <PhotoCredit
+                link={article.data.hero_image_credit_link}
+                text={article.data.hero_image_credit_text}
+            />
+
+            <Heading level={1}>
+                {article.data.title}
+            </Heading>
+
+            <!-- <DatePostedUpdated
+                date_posted={article.data.date}
+                date_updated={article.data.date_updated}
+            /> -->
+
+            <Content />
+        </article>
+    </main>
+</BaseLayout>
+
+<style lang="scss">
+    @use "abstracts";
+    @use "mixins" as *;
+
+    main {
+        @include content-grid;
+    }
+    .article {
+        padding-block: abstracts.$space-md;
+        overflow: hidden;
+
+        a {
+            @include abstracts.anchor;
+        }
+
+        &__hero {
+            aspect-ratio: 16/9;
+            border-radius: abstracts.$border-radius;
+        }
+    }
+</style>

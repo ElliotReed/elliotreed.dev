@@ -16,8 +16,8 @@
     body {
         // uncomment if full-viewport positioned children needed
         // position: relative;
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-rows: auto 1fr auto; // header, main, footer 
         margin: 0;
         color: var(--color-text);
         font-family: var(--font-body);
