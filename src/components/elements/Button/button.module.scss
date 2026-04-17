@@ -1,0 +1,11 @@
+@use "mixins" as *;
+
+.button {
+  @include button-primary;
+  color: var(--color-text);
+  font-family: var(--font-ui);
+
+  &.vertical {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,60 @@
+---
+import { Image } from "astro:assets";
+
+import { getExcerpt } from "../utils/excerpt";
+
+import Heading from "./Heading/Heading";
+import Paragraph from "./elements/Paragraph.astro";
+import GoToDetailLink from "./GoToDetailLink.astro";
+
+const prefix = "portfolio";
+
+const { node, prefixed } = Astro.props;
+---
+
+<li class={"portfolio-list-item"}>
+  {
+    node.data.hero_image && (
+      <Image
+        src={node.data.hero_image}
+        alt={node.data.hero_image_alt}
+        class="image"
+      />
+    )
+  }
+  <div class={"portfolio-list-item__content"}>
+    <Heading level={3} size={4} addedStyles="heading">{node.data.title}</Heading
+    >
+    <Paragraph class="blurb">{node.data.blurb}</Paragraph>
+    <Paragraph>{getExcerpt(node.body)}</Paragraph>
+    <GoToDetailLink
+      addedStyles="detail-link"
+      to={`/${prefix}/${node.data.slug}/`}
+    >
+      Go To Details
+    </GoToDetailLink>
+  </div>
+</li>
+
+<style lang="scss">
+  @use "mixins";
+
+  .portfolio-list-item {
+    background: var(--color-surface);
+    @include mixins.radius-card;
+    @include mixins.shadow(1);
+    overflow: hidden;
+
+    &__content {
+      padding-inline: var(--space-md);
+
+      .blurb {
+        font-weight: var(--font-weight-semi-bold);
+      }
+    }
+
+    .detail-link {
+      margin-block: var(--space-md);
+    }
+  }
+</style>

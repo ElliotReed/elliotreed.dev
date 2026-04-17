@@ -1,0 +1,31 @@
+---
+import Heading from "~/components/Heading";
+import Paragraph from "~/components/elements/Paragraph.astro";
+import BackButton from "~/components/BackButton/BackButton";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+  <main class="not-found">
+    <div>
+      <Heading level={1} color="light">NOT FOUND</Heading>
+      <Paragraph>
+        You just hit a route that doesn't exist...the sadness 😢.
+      </Paragraph>
+      <BackButton client:load addedStyles="button" />
+    </div>
+  </main>
+</BaseLayout>
+
+<style lang="scss">
+  @use "mixins";
+
+  .not-found {
+    @include mixins.content-grid;
+
+    .button {
+      display: block;
+      margin-block: var(--space-md);
+    }
+  }
+</style>

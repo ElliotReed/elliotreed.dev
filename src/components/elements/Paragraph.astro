@@ -1,0 +1,41 @@
+---
+const { class: className, size = "md", ...rest } = Astro.props;
+
+let sizeClass;
+switch (size) {
+    case "sm":
+        sizeClass = "sm";
+        break;
+    case "lg":
+        sizeClass = "lg";
+        break;
+    default:
+        sizeClass = "md";
+        break;
+}
+---
+
+<p class:list={["paragraph-default", sizeClass, className]} {...rest}>
+    <slot />
+</p>
+
+<style lang="scss">
+    @layer components {
+        .paragraph-default {
+            color: inherit;
+            margin-inline: auto;
+        }
+
+        .sm {
+            font-size: var(--text-sm);
+        }
+
+        .md {
+            font-size: var(--text-md);
+        }
+
+        .lg {
+            font-size: var(--text-lg);
+        }
+    }
+</style>

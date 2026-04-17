@@ -1,0 +1,60 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Heading from "~/components/Heading/Heading";
+import Paragraph from "~/components/elements/Paragraph.astro";
+import PortfolioList from "~/components/PortfolioList.astro";
+import PortfolioListItem from "~/components/PortfolioListItem.astro";
+
+import { portfolioPieces } from "~/utils/getCollection";
+import { sortByDate } from "~/utils/date";
+
+const sortedPortfolioPieces = sortByDate(portfolioPieces);
+
+const featuredPieces = sortedPortfolioPieces.filter(
+  (item) => item.data.featured === true,
+);
+
+const notFeaturedItems = sortedPortfolioPieces.filter(
+  (item) => item.data.featured === false,
+);
+---
+
+<BaseLayout title="Portfolio | Elliot Reed | Developer" descriptiot="TBD">
+  <main class="organization">
+    <header>
+      <Heading level={1}>Portfolio</Heading>
+
+      <Paragraph>A selection of projects I have built.</Paragraph>
+    </header>
+
+    <section>
+      <Heading level={2}>Featured</Heading>
+      <PortfolioList>
+        {
+          featuredPieces.map((item) => (
+            <PortfolioListItem node={item} prefixed={false} />
+          ))
+        }
+      </PortfolioList>
+    </section>
+
+    <section>
+      <Heading level={2}>Projects</Heading>
+      <PortfolioList>
+        {
+          notFeaturedItems.map((item) => (
+            <PortfolioListItem node={item} prefixed={false} />
+          ))
+        }
+      </PortfolioList>
+    </section>
+  </main>
+</BaseLayout>
+
+<style lang="scss">
+  @use "mixins";
+
+  main {
+    @include mixins.content-grid;
+  }
+</style>

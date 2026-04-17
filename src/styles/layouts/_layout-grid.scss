@@ -1,0 +1,36 @@
+@use "../abstracts" as *;
+
+.layout-grid {
+    $_gutter-to-prefered-width: minmax(0, auto);
+    $_prefered-width-to-center: minmax(0, calc($max-width / 2));
+    display: grid;
+    grid-template-columns:
+        [start] em-scale(500) [gutter-start] $_gutter-to-prefered-width [prefered-width-start] $_prefered-width-to-center [center] $_prefered-width-to-center [prefered-width-end] $_gutter-to-prefered-width [gutter-end] em-scale(500) [end];
+    grid-auto-rows: min-content;
+
+    &>* {
+        grid-column: gutter-start / gutter-end;
+    }
+
+    .layout-grid__without-auto-rows {
+        grid-auto-rows: initial;
+    }
+
+    .layout-grid__with-gutter {
+        grid-column: gutter-start / gutter-end;
+    }
+
+    .layout-grid__prefered-width {
+        grid-column: prefered-width-start / prefered-width-end;
+    }
+
+    .layout-grid__centered {
+        grid-column: gutter-start / gutter-end;
+        justify-self: center;
+        max-width: $max-width;
+    }
+
+    .layout-grid__full-width {
+        grid-column: start / end;
+    }
+}

@@ -1,0 +1,5 @@
+@use "mixins";
+
+.back-button {
+  @include mixins.button-primary;
+}

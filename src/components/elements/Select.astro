@@ -1,0 +1,131 @@
+---
+interface Props {
+    options: { value: string; label: string }[];
+    initialValue?: string;
+    id: string;
+}
+
+const { options, initialValue, id } = Astro.props;
+---
+
+<div class="select" data-select data-id={id}>
+    <button class="select-button" aria-haspopup="listbox" aria-expanded="false">
+        <span class="label">{initialValue ?? options[0].label}</span>
+    </button>
+
+    <ul class="select-dropdown" role="listbox">
+        {
+            options.map(({ value, label }) => (
+                <li role="option" data-value={value}>
+                    {label}
+                </li>
+            ))
+        }
+    </ul>
+</div>
+
+<script>
+    function initSelect(select: HTMLElement): void {
+        const button =
+            select.querySelector<HTMLButtonElement>(".select-button");
+        const dropdown =
+            select.querySelector<HTMLUListElement>(".select-dropdown");
+        const label = select.querySelector<HTMLElement>(".label");
+        if (!button || !dropdown || !label) return;
+
+        button.addEventListener("click", () => {
+            const expanded = select.classList.toggle("open");
+            button.setAttribute("aria-expanded", String(expanded));
+        });
+
+        dropdown.addEventListener("click", (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (!target.matches("[role=option]")) return;
+
+            label.textContent = target.textContent ?? "";
+            select.classList.remove("open");
+            button.setAttribute("aria-expanded", "false");
+
+            const value = target.dataset.value ?? "";
+            const id = select.dataset.id ?? "";
+
+            // dispatch custom event — any component can listen
+            select.dispatchEvent(
+                new CustomEvent("select:change", {
+                    bubbles: true,
+                    detail: { value, id },
+                }),
+            );
+        });
+
+        document.addEventListener("click", (e: MouseEvent) => {
+            if (!select.contains(e.target as Node)) {
+                select.classList.remove("open");
+                button.setAttribute("aria-expanded", "false");
+            }
+        });
+    }
+
+    // handle multiple selects on the page
+    document.querySelectorAll<HTMLElement>("[data-select]").forEach(initSelect);
+
+    // reinit after Astro view transitions
+    document.addEventListener("astro:after-swap", () => {
+        document
+            .querySelectorAll<HTMLElement>("[data-select]")
+            .forEach(initSelect);
+    });
+</script>
+
+<style lang="scss">
+    @use "mixins" as *;
+
+    .select {
+        position: relative;
+        width: 140px;
+    }
+
+    .select-button {
+        width: 100%;
+        @include padding-box("sm");
+        @include border;
+        @include radius;
+        text-align: left;
+        cursor: pointer;
+        background-color: transparent;
+        color: var(--color-header-text);
+    }
+
+    .select-dropdown {
+        position: absolute;
+        top: calc(100% + var(--space-1));
+        left: 0;
+        right: 0;
+        list-style: none;
+        padding: var(--space-1);
+        margin: 0;
+        @include border;
+        @include radius;
+        background-color: var(--color-surface);
+        @include shadow(4);
+        display: none;
+        z-index: 10;
+    }
+
+    .select-dropdown li {
+        @include padding-box("xs");
+        @include radius("sm");
+        cursor: pointer;
+        color: var(--color-text);
+        font-size: var(--text-sm);
+
+        &:hover {
+            background-color: var(--color-interactive-muted);
+            color: var(--color-interactive);
+        }
+    }
+
+    .select.open .select-dropdown {
+        display: block;
+    }
+</style>

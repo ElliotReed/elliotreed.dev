@@ -1,0 +1,30 @@
+@use "abstracts" as *;
+
+@layer components {
+
+    // color
+    .clr-default {
+        color: get-color("mainBrand");
+    }
+
+    .clr-light {
+        color: get-color("lightShades");
+    }
+
+    .clr-dark {
+        color: get-color("darkShades");
+    }
+
+    // alignment
+    .start {
+        text-align: start;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .end {
+        text-align: end;
+    }
+}

@@ -2,23 +2,23 @@ name: Deploy Static Site to VPS
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 env:
   # VPS connection
   VPS_HOST: ${{ secrets.VPS_HOST }}
   VPS_USER: ${{ secrets.VPS_USER }}
-  
+
   # Project config
-  SITE_NAME: backtalk
+  SITE_NAME: elliotreed.dev
   NODE_VERSION: "24"
-  
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    
+
     steps:
       - name: Set remote path
         run: echo "REMOTE_SITE_PATH=~/apps/${{ env.SITE_NAME }}" >> $GITHUB_ENV
@@ -30,7 +30,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: "npm"
 
       - name: Setup SSH key
         uses: webfactory/ssh-agent@v0.9.0

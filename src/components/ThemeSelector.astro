@@ -1,0 +1,184 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  animate?: boolean;
+  duration?: "slow" | "normal" | "fast";
+}
+
+const { animate = false, duration = "slow" } = Astro.props;
+---
+
+<button
+  type="button"
+  class="theme-toggle"
+  id="theme-toggle"
+  data-animate={animate ? "true" : "false"}
+  data-duration={duration}
+>
+  <Icon name="tabler:sun" class="sun-icon" />
+  <Icon name="tabler:moon" class="moon-icon" />
+  <span class="visually-hidden" id="theme-text">Switch to light theme</span>
+</button>
+
+<script>
+  type Theme = "dark" | "light";
+  type DurationProps = "slow" | "normal" | "fast";
+
+  const html = document.documentElement;
+  const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+  function getDuration(): number {
+    const toggle = document.getElementById("theme-toggle");
+    const type = (toggle?.dataset.duration ?? "slow") as DurationProps;
+    const duration = parseFloat(
+      getComputedStyle(html).getPropertyValue(`--duration-${type}`),
+    );
+    return isNaN(duration) ? 400 : duration;
+  }
+
+  function shouldAnimate(): boolean {
+    const toggle = document.getElementById("theme-toggle");
+    return toggle?.dataset.animate === "true";
+  }
+
+  // ── storage ──────────────────────────────────────────────
+  function getStoredTheme(): Theme | null {
+    return localStorage.getItem("theme") as Theme | null;
+  }
+
+  function storeTheme(theme: Theme): void {
+    localStorage.setItem("theme", theme);
+  }
+
+  // ── theme ─────────────────────────────────────────────────
+  function getInitialTheme(): Theme {
+    return getStoredTheme() ?? (media.matches ? "dark" : "light");
+  }
+
+  function applyTheme(theme: Theme): void {
+    html.setAttribute("data-theme", theme);
+    updateAria(theme);
+  }
+
+  function toggleTheme(): Theme {
+    const current = html.getAttribute("data-theme") as Theme;
+    return current === "dark" ? "light" : "dark";
+  }
+
+  // ── aria ──────────────────────────────────────────────────
+  function updateAria(theme: Theme): void {
+    const themeText = document.getElementById("theme-text");
+    if (!themeText) return;
+    themeText.textContent =
+      theme === "dark" ? "Switch to light theme" : "Switch to dark theme";
+  }
+
+  // ── view transition ───────────────────────────────────────
+  function transitionTheme(trigger: HTMLElement): void {
+    const rect = trigger.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const radius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y),
+    );
+
+    const next = toggleTheme();
+
+    if (!shouldAnimate() || !document.startViewTransition) {
+      applyTheme(next);
+      storeTheme(next);
+      return;
+    }
+
+    const duration = getDuration();
+
+    html.classList.add("theme-transitioning");
+
+    const transition = document.startViewTransition(() => {
+      applyTheme(next);
+      storeTheme(next);
+    });
+
+    transition.ready.then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${radius}px at ${x}px ${y}px)`,
+          ],
+        },
+        {
+          duration,
+          easing: "ease-in-out",
+          pseudoElement: "::view-transition-new(root)",
+        },
+      );
+    });
+
+    transition.finished.then(() => {
+      html.classList.remove("theme-transitioning");
+    });
+  }
+
+  // ── init ──────────────────────────────────────────────────
+  function init(): void {
+    applyTheme(getInitialTheme());
+
+    const toggle = document.getElementById("theme-toggle");
+    toggle?.addEventListener("click", () => {
+      transitionTheme(toggle as HTMLElement);
+    });
+  }
+
+  init();
+  document.addEventListener("astro:after-swap", init);
+
+  // follow OS if no stored preference
+  media.addEventListener("change", (e) => {
+    if (!getStoredTheme()) {
+      applyTheme(e.matches ? "dark" : "light");
+    }
+  });
+</script>
+
+<style lang="scss">
+  @use "mixins" as *;
+
+  :global(::view-transition-old(root)) {
+    animation: none;
+  }
+
+  :global(::view-transition-new(root)) {
+    animation: none;
+  }
+
+  :global(.theme-transitioning *) {
+    transition: none !important;
+  }
+
+  .theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    padding: var(--space-sm);
+    display: grid;
+    place-content: center;
+  }
+
+  .sun-icon {
+    display: none;
+  }
+  .moon-icon {
+    display: none;
+  }
+
+  :global([data-theme="light"]) .sun-icon {
+    display: block;
+  }
+  :global([data-theme="dark"]) .moon-icon {
+    display: block;
+  }
+</style>

@@ -1,0 +1,68 @@
+---
+import DesignLayout from "~/layouts/DesignLayout.astro";
+
+const colors = [
+  "light",
+  "dark",
+  "mainBrand",
+  "darkShades",
+  "lightShades",
+  "error",
+  "info",
+  "success",
+  "warning",
+  "white",
+  "black",
+  "neutral",
+];
+
+const items = [...Array(9).keys()].map((i) => (i + 1) * 100);
+---
+
+<DesignLayout
+  title="Legacy Color Display"
+  description="The color pallet"
+  headerMode="system"
+>
+  <h1>Legacy Colors</h1>
+
+  <div class="color-container">
+    {
+      colors.map((color, i) => (
+        <ul class="color-grid">
+          {items.map((item) => (
+            <li class={`${color}${item}`}>
+              {color}-{item}
+            </li>
+          ))}
+        </ul>
+      ))
+    }
+  </div>
+</DesignLayout>
+
+<style lang="scss">
+  @use "abstracts" as *;
+  @use "abstracts/color/color-map";
+
+  .color-container {
+    background: #fff;
+    padding: 1em;
+  }
+
+  .color-grid {
+    li {
+      @include padding-box();
+      color: get-color("white", 100);
+      font-size: em-scale(400);
+    }
+  }
+
+  @each $color, $keys in color-map.$color-map {
+    @each $key, $value in $keys {
+      .#{$color}#{$key} {
+        background: $value;
+      }
+    }
+  }
+</style>

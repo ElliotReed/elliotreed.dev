@@ -1,0 +1,80 @@
+---
+import { Icon } from "astro-icon/components";
+
+import Copyright from "~/components/Copyright";
+import ExternalLink from "~/components/ExternalLink";
+import Navbar from "./Navbar.astro";
+import ThemeSelector from "~/components/ThemeSelector.astro";
+
+const { type } = Astro.props;
+---
+
+<footer>
+  <Navbar isSmall />
+  <div class="bottom-row">
+    <Copyright
+      originYear="2023"
+      holder="Elliot Reed"
+      link={{
+        to: "/",
+      }}
+      addedStyles="small"
+    />
+    <div class="links-and-controls">
+      <a href="/design/" class="design-link">Design</a>
+      <div class="social-links">
+        <ExternalLink
+          to="https://www.linkedin.com/in/elliot-reed/"
+          title="LinkedIn"
+        >
+          <Icon name="tabler:brand-linkedin" class="icon" />
+        </ExternalLink>
+        <ExternalLink to="https://github.com/ElliotReed" title="GitHub">
+          <Icon name="tabler:brand-github" class="icon" />
+        </ExternalLink>
+      </div>
+      <!-- <ThemeSelector animate /> -->
+    </div>
+  </div>
+</footer>
+
+<style lang="scss">
+  @use "mixins";
+
+  footer {
+    @include mixins.padding-box("md");
+    @include mixins.border;
+
+    .design-link {
+      font-size: var(--text-sm);
+    }
+  }
+
+  .bottom-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-block-start: var(--space-md);
+  }
+
+  .links-and-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .small {
+    font-size: var(--text-sm);
+  }
+  .social-links {
+    display: flex;
+    gap: var(--space-md);
+  }
+  .social-links a {
+    text-decoration: none;
+    color: var(--color-text);
+  }
+  .social-links a:hover {
+    // color: rgb(var(--color-neutral-500));
+  }
+</style>

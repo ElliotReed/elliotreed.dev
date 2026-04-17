@@ -1,49 +1,210 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { Image } from "astro:assets";
+
+import { SITE_DESCRIPTION, SITE_TITLE } from "~/consts";
+import DatePostedUpdated from "~/components/DatePostedUpdated.astro";
+import GoToDetailLink from "~/components/GoToDetailLink.astro";
+import Heading from "~/components/Heading/Heading";
+import Paragraph from "~/components/elements/Paragraph.astro";
+import ProfileHeader from "~/components/ProfileHeader.astro";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+
+import { articles } from "~/utils/getCollection";
+import { portfolioPieces } from "~/utils/getCollection";
+import { getExcerpt } from "~/utils/excerpt";
+import { sortByDate } from "~/utils/date";
+
+const featuredPieces = portfolioPieces.filter(
+  (item) => item.data.featured === true,
+);
+
+const sortedPieces = sortByDate(featuredPieces);
+
+const featuredArticles = articles.filter(
+  (article) => article.data.featured === true,
+);
+
+const sortedArticles = sortByDate(featuredArticles);
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<BaseLayout title={"Elliot Reed | Developer"} description={SITE_DESCRIPTION}>
+  <main>
+    <ProfileHeader type="developer" addedStyles="full-bleed" />
+    <div class="feature-container">
+      <section class="portfolio">
+        <Heading level={2} size={4}>Featured Portfolio Pieces</Heading>
+        <ul class="portfolio-list">
+          {
+            sortedPieces.map((piece) => (
+              <li class="portfolio-piece">
+                <article class="portfolio-card">
+                  {piece.data.hero_image && (
+                    <Image
+                      src={piece.data.hero_image}
+                      alt={piece.data.hero_image_alt}
+                      class="image"
+                    />
+                  )}
+                  <div class={"portfolio-piece__content"}>
+                    <div class="text">
+                      <Heading level={3} size={6} addedStyles="heading">
+                        {piece.data.title}
+                      </Heading>
+                      <Paragraph class="blurb">{piece.data.blurb}</Paragraph>
+                    </div>
+                    <GoToDetailLink
+                      addedStyles="detail-link"
+                      to={`/portfolio/${piece.data.slug}/`}
+                    >
+                      Go To Details
+                    </GoToDetailLink>
+                  </div>
+                </article>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="articles">
+        <div>
+          <Heading level={2} size={4}>Featured Articles</Heading>
+        </div>
+
+        <ul class="articles-list">
+          {
+            sortedArticles.map((article) => (
+              <li class="article-item">
+                <article class="article-card">
+                  <div class="article-card__content">
+                    <Heading level={3} size={5} addedStyles="heading">
+                      {article.data.title}
+                    </Heading>
+
+                    <DatePostedUpdated
+                      date_posted={article.data.date}
+                      date_updated={article.data.date_updated ?? undefined}
+                    />
+
+                    <Paragraph>
+                      {article.body && getExcerpt(article.body)}
+                    </Paragraph>
+
+                    <GoToDetailLink
+                      to={`/articles/${article.data.slug}/`}
+                      addedStyles="article-link"
+                    >
+                      Read Article
+                    </GoToDetailLink>
+                  </div>
+                </article>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
+
+<style lang="scss">
+  @use "abstracts";
+  @use "mixins";
+
+  main {
+    @include mixins.content-grid;
+  }
+  .feature-container {
+    --gutter: var(--space-md);
+    display: grid;
+    grid-template-columns: repeat(12, [col-start] 1fr);
+
+    @include mixins.respond-to("md") {
+      gap: var(--space-md);
+      grid-column: wide !important;
+    }
+  }
+
+  .portfolio {
+    grid-column: col-start 1 / span 12;
+
+    @include mixins.respond-to("md") {
+      grid-column: col-start 1 / span 6;
+    }
+  }
+
+  .articles {
+    grid-column: col-start 1 / span 12;
+
+    @include mixins.respond-to("md") {
+      grid-column: col-start 7 / span 6;
+    }
+  }
+
+  .articles-list,
+  .portfolio-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & > * + * {
+      margin-block-start: var(--space-md);
+    }
+
+    .article-card,
+    .portfolio-card {
+      background: var(--color-surface);
+      @include mixins.radius-card;
+      @include mixins.shadow(1);
+
+      .heading {
+        margin: 0;
+        color: inherit;
+      }
+    }
+    .portfolio-card {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      color: var(--color-lights-100);
+
+      .portfolio-piece__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transform: translateY(-100%);
+        @include mixins.box-card;
+        border-radius: unset;
+
+        background: #000000ee;
+        backdrop-filter: blur(1px);
+        color: inherit;
+
+        .blurb {
+          font-size: var(--text-xs);
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  .article-card {
+    @include mixins.box-card;
+  }
+
+  .article-link {
+    margin-block-start: var(--space-md);
+  }
+
+  .link-card {
+    text-decoration: none;
+    @include mixins.shadow(1);
+    @include mixins.radius-card;
+    overflow: hidden;
+  }
+
+  .link-card__content {
+    padding-inline: var(--space-inline);
+  }
+</style>

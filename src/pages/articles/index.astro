@@ -1,0 +1,109 @@
+---
+import { Image } from "astro:assets";
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import DatePostedUpdated from "../../components/DatePostedUpdated.astro";
+import GoToDetailLink from "../../components/GoToDetailLink.astro";
+import Heading from "../../components/Heading/Heading";
+import Paragraph from "~/components/elements/Paragraph.astro";
+import { getExcerpt } from "../../utils/excerpt";
+
+import { articles } from "~/utils/getCollection";
+import { sortByDate } from "~/utils/date";
+
+const sortedArticles = sortByDate(articles);
+---
+
+<BaseLayout title="Articles | Elliot Reed" description="TBD">
+  <main class="articles">
+    <div>
+      <Heading level={1}>Articles</Heading>
+    </div>
+
+    <ul class="articles__list">
+      {
+        sortedArticles.map((article) => (
+          <li>
+            <article class="articles-article">
+              <a
+                href={`/articles/${article.data.slug}/`}
+                class="articles-article__image-link"
+              >
+                {article.data.hero_image && (
+                  <Image
+                    src={article.data.hero_image}
+                    alt={article.data.hero_image_alt}
+                    class="articles-article__image"
+                  />
+                )}
+              </a>
+
+              <div class="articles-article__content">
+                <Heading level={2}>{article.data.title}</Heading>
+
+                <DatePostedUpdated
+                  date_posted={article.data.date}
+                  date_updated={article.data.date_updated ?? undefined}
+                />
+
+                <Paragraph>
+                  {article.body && getExcerpt(article.body)}
+                </Paragraph>
+
+                <GoToDetailLink
+                  to={`/articles/${article.data.slug}/`}
+                  addedStyles="link-style"
+                >
+                  Read Article
+                </GoToDetailLink>
+              </div>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</BaseLayout>
+
+<style lang="scss">
+  @use "abstracts";
+  @use "mixins";
+
+  .articles {
+    @include mixins.content-grid;
+
+    &__list {
+      list-style-type: none;
+      padding: 0;
+
+      li {
+        @include mixins.border-ghost;
+        margin-bottom: var(--space-lg);
+      }
+    }
+
+    &-article {
+      @include mixins.radius-card;
+      @include mixins.shadow(1);
+      overflow: hidden;
+      background: var(--color-surface);
+
+      @include mixins.respond-to("md") {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+      }
+
+      &__content {
+        padding-inline: var(--space-md);
+      }
+
+      &__image-link {
+        display: flex;
+      }
+
+      .link-style {
+        margin-block: var(--space-md);
+      }
+    }
+  }
+</style>

@@ -1,62 +1,61 @@
-# Astro Starter Kit: Blog
+# Elliot Reed
 
-```sh
-npm create astro@latest -- --template blog
+Personal website site.
+
+[Elliot Reed Website](https:/elliotreed.dev)
+
+## Table of Contents
+
+- [Dependencies](#dependencies)
+
+## Dependencies
+
+```console
+@fortawesome/fontawesome-svg-core
+@fortawesome/free-solid-svg-icons
+@fortawesome/react-fontawesome
+@mdx-js/react
+classnames
+gatsby
+gatsby-plugin-image
+gatsby-plugin-layout
+gatsby-plugin-manifest
+gatsby-plugin-mdx
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+  Adds a source name property to allMdx queries:  [gatsby-plugin-mdx-source-name](https://www.gatsbyjs.com/plugins/gatsby-plugin-mdx-source-name/)
 
-Features:
-
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-├── public/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+```console
+    gatsby-plugin-mdx-source-name
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+```console
+  gatsby-plugin-offline
+  gatsby-plugin-sass
+  gatsby-plugin-sharp
+  gatsby-plugin-typescript
+  gatsby-source-filesystem
+  gatsby-transformer-json
+  gatsby-transformer-sharp
+  gatsby-transformer-typescript-css-modules
+  gsap
+  pigeon-maps
+  react
+  react-dom
+  sass
+```
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+### devDependencies
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+```console
+@types/node
+@types/react
+@types/react-dom
+typescript
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Structure
 
-## 🧞 Commands
+### layouts
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+Components for the layouts of the app layers, not in the pages directory so that they don't become routes

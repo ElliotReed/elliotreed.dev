@@ -1,0 +1,104 @@
+---
+import { Image } from "astro:assets";
+import headerImage from "../assets/images/landing-developer-background.jpg";
+import Logo from "./Logo/Logo";
+
+const { addedStyles, type, ...rest } = Astro.props;
+---
+
+<div class:list={["profile-header", addedStyles]} {...rest}>
+  <Image
+    src={headerImage}
+    alt="Screenshot of this website's code."
+    class="profile-header__image-wrapper"
+    loading="eager"
+  />
+  <div class="window-image">
+    <Logo
+      client:only="react"
+      mode="developer"
+      width="20vw"
+      animation="DEVELOPER_PAGE_DISPLAY"
+    />
+  </div>
+
+  <h1 class="profile-header__text">
+    I am a {type} living and working in the Denver Metro area.
+  </h1>
+</div>
+
+<style lang="scss">
+  @use "abstracts" as *;
+  @use "mixins";
+
+  @layer component {
+    .profile-header {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.618fr 1fr;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+
+      @include mixins.respond-to("sm") {
+        aspect-ratio: 16 / 8;
+      }
+
+      @include mixins.respond-to("md") {
+        aspect-ratio: 16 / 7;
+      }
+
+      @include mixins.respond-to("lg") {
+        aspect-ratio: 16 / 6;
+      }
+
+      @include mixins.respond-to("xl") {
+        aspect-ratio: 16 / 5;
+      }
+
+      @include mixins.respond-to("xxl") {
+        aspect-ratio: 16 / 4;
+      }
+
+      &__image-wrapper {
+        grid-column: 1 / -1;
+      }
+
+      &__text {
+        --gradient-direction: bottom right;
+
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 0;
+        @include mixins.padding-box("md");
+        color: var(--color-lights-500);
+        font-size: var(--text-md);
+        text-align: end;
+        text-wrap: balanced;
+        background: linear-gradient(
+          to var(--gradient-direction),
+          transparent 50%,
+          #000
+        );
+
+        @include mixins.respond-to("md") {
+          --gradient-direction: top right;
+          font-size: var(--text-lg);
+          grid-column: 2 / 3;
+          bottom: unset;
+          right: unset;
+        }
+      }
+
+      .window-image {
+        position: absolute;
+        inset: 0;
+        grid-column: 1/-1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: inset 0 0 0 100rem #000c;
+      }
+    }
+  }
+</style>
